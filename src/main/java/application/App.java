@@ -3,7 +3,7 @@ package application;
 import java.math.BigDecimal;
 
 import imposto.CalculadoraDeImpostos;
-import imposto.TipoImposto;
+import imposto.ICMS;
 import orcamento.Orcamento;
 
 public class App {
@@ -12,7 +12,8 @@ public class App {
     
     CalculadoraDeImpostos calculadora = new CalculadoraDeImpostos();
     Orcamento orcamento = new Orcamento(new BigDecimal(25000.00));
-    System.out.println(calculadora.calcular(orcamento, TipoImposto.ICMS));
+    System.out.println(calculadora.calcular(orcamento, new ICMS()));
+    
   }
 
 }
