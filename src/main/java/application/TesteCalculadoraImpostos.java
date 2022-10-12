@@ -6,12 +6,12 @@ import imposto.CalculadoraDeImpostos;
 import imposto.ICMS;
 import orcamento.Orcamento;
 
-public class App {
+public class TesteCalculadoraImpostos {
   
   public static void main(String[] args) {
     
     CalculadoraDeImpostos calculadora = new CalculadoraDeImpostos();
-    Orcamento orcamento = new Orcamento(new BigDecimal(25000.00));
+    Orcamento orcamento = new Orcamento(new BigDecimal(25000.00), 1);
     System.out.println(calculadora.calcular(orcamento, new ICMS()));
     
   }
