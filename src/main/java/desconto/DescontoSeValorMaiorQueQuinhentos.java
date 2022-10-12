@@ -11,10 +11,12 @@ public class DescontoSeValorMaiorQueQuinhentos extends BaseDesconto {
     }
 
     @Override
-    public BigDecimal calcular() {
-        if (orcamento.getValor().compareTo(new BigDecimal("500")) > 0) {
-            return orcamento.getValor().multiply(new BigDecimal("0.05"));
-        }
-        return this.proximo.calcular();
+    protected boolean deveEfetuarCalculo() {
+        return orcamento.getValor().compareTo(new BigDecimal("500")) > 0;
+    }
+
+    @Override
+    protected BigDecimal efetuarCalculo() {
+        return orcamento.getValor().multiply(new BigDecimal("0.05"));
     }
 }

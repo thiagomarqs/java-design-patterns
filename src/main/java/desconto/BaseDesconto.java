@@ -21,6 +21,10 @@ public abstract class BaseDesconto implements Desconto {
 
     @Override
     public BigDecimal calcular() {
-        return BigDecimal.ZERO;
+        if(deveEfetuarCalculo()) return efetuarCalculo();
+        return this.proximo.calcular();
     }
+
+    protected abstract boolean deveEfetuarCalculo();
+    protected abstract BigDecimal efetuarCalculo();
 }
