@@ -24,4 +24,11 @@ class CalculadoraDeDescontosTest {
         var desconto = calculadora.calcular(o);
         assertEquals(new BigDecimal("50.00"), desconto);
     }
+
+    @Test
+    void discountShouldBeOfZeroPercent() {
+        Orcamento o = new Orcamento(new BigDecimal("499"), 5);
+        var desconto = calculadora.calcular(o);
+        assertEquals(BigDecimal.ZERO, desconto);
+    }
 }
