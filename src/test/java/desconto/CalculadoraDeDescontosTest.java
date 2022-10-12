@@ -1,12 +1,11 @@
 package desconto;
 
 import orcamento.Orcamento;
-import orcamento.SituacaoOrcamento;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class CalculadoraDeDescontosTest {
 
@@ -14,21 +13,21 @@ class CalculadoraDeDescontosTest {
 
     @Test
     void discountShouldBeOfTenPercentIfQuantityOfItemsIsGreaterThanFive() {
-        Orcamento o = new Orcamento(new BigDecimal("2300"), 6, SituacaoOrcamento.APROVADO);
+        Orcamento o = new Orcamento(new BigDecimal("2300"), 6, null);
         var desconto = calculadora.calcular(o);
         assertEquals(new BigDecimal("230.0"), desconto);
     }
 
     @Test
     void discountShouldBeOfFivePercentIfValueIsGreaterThanFiveHundred() {
-        Orcamento o = new Orcamento(new BigDecimal("1000"), 1, SituacaoOrcamento.APROVADO);
+        Orcamento o = new Orcamento(new BigDecimal("1000"), 1, null);
         var desconto = calculadora.calcular(o);
         assertEquals(new BigDecimal("50.00"), desconto);
     }
 
     @Test
     void discountShouldBeOfZeroPercent() {
-        Orcamento o = new Orcamento(new BigDecimal("499"), 5, SituacaoOrcamento.APROVADO);
+        Orcamento o = new Orcamento(new BigDecimal("499"), 5, null);
         var desconto = calculadora.calcular(o);
         assertEquals(BigDecimal.ZERO, desconto);
     }

@@ -1,5 +1,8 @@
 package orcamento;
 
+import orcamento.estados.EmAnalise;
+import orcamento.estados.SituacaoOrcamento;
+
 import java.math.BigDecimal;
 
 public class Orcamento {
@@ -8,6 +11,12 @@ public class Orcamento {
   private Integer quantidadeItens;
 
   private SituacaoOrcamento situacao;
+
+  public Orcamento(BigDecimal valor, Integer quantidadeItens) {
+    this.valor = valor;
+    this.quantidadeItens = quantidadeItens;
+    this.situacao = new EmAnalise(this);
+  }
 
   public Orcamento(BigDecimal valor, Integer quantidadeItens, SituacaoOrcamento situacao) {
     this.valor = valor;
@@ -28,24 +37,20 @@ public class Orcamento {
   }
 
   public void aplicarDescontoExtra() {
-    var valorDoDescontoExtra = BigDecimal.ZERO;
-
-    if(situacao.equals(SituacaoOrcamento.EM_ANALISE)) {
-      valorDoDescontoExtra = this.valor.multiply(new BigDecimal("0.05"));
-    }
-    else if(situacao.equals(SituacaoOrcamento.APROVADO)) {
-      valorDoDescontoExtra = this.valor.multiply(new BigDecimal("0.02"));
-    }
-
+    var valorDoDescontoExtra = this.situacao.calcularValorDescontoExtra(this);
     this.valor = this.valor.subtract(valorDoDescontoExtra);
   }
 
   public void aprovar() {
-    this.situacao = SituacaoOrcamento.APROVADO;
+    this.situacao.aprovar();
   }
 
   public void reprovar() {
-    this.situacao = SituacaoOrcamento.REPROVADO;
+    this.situacao.reprovar();
+  }
+
+  public void finalizar() {
+    this.situacao.finalizar();
   }
 
   public void setSituacao(SituacaoOrcamento situacao) {
