@@ -124,4 +124,18 @@ class OrcamentoTest {
         assertThrows(EstadoInvalidoException.class, o::finalizar);
     }
 
+    @Test
+    void shouldAllowBothBudgetAndBudgetItemToBeAddedToABudget() {
+        Orcamento orcamento = new Orcamento();
+        orcamento.adicionarItem(new ItemOrcamento(new BigDecimal("200.00")));
+
+        Orcamento orcamentoAntigo = new Orcamento();
+        orcamentoAntigo.adicionarItem(new ItemOrcamento(new BigDecimal("340.00")));
+        orcamentoAntigo.reprovar();
+
+        orcamento.adicionarItem(orcamentoAntigo);
+
+        assertEquals(new BigDecimal("540.00"), orcamento.getValor());
+    }
+
 }

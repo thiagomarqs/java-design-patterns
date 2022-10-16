@@ -9,11 +9,11 @@ import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Orcamento {
+public class Orcamento implements Orcavel{
 
   private BigDecimal valor = BigDecimal.ZERO;
   private SituacaoOrcamento situacao = new EmAnalise(this);
-  private List<ItemOrcamento> itens = new ArrayList<>();
+  private List<Orcavel> itens = new ArrayList<>();
 
   public Orcamento() {}
 
@@ -58,9 +58,12 @@ public class Orcamento {
     return this.situacao instanceof Finalizado;
   }
 
-  public void adicionarItem(ItemOrcamento item) {
+  public void adicionarItem(Orcavel item) {
     this.valor = valor.add(item.getValor());
     this.itens.add(item);
   }
 
+  public List<Orcavel> getItens() {
+    return itens;
+  }
 }
