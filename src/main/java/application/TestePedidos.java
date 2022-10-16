@@ -1,9 +1,14 @@
 package application;
 
+import acao.AcaoAposGerarPedido;
+import acao.EnviarEmailPedido;
+import acao.SalvarPedidoNoBancoDeDados;
 import pedido.GeraPedido;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.List;
 
 public class TestePedidos {
 
@@ -13,7 +18,12 @@ public class TestePedidos {
         String cliente = "João Zinho";
         LocalDateTime data = LocalDateTime.now();
 
-        GeraPedido geraPedido = new GeraPedido(cliente, valorOrcamento, quantidadeItens);
+        List<AcaoAposGerarPedido> acoes = Arrays.asList(
+            new EnviarEmailPedido(),
+            new SalvarPedidoNoBancoDeDados()
+        );
+
+        GeraPedido geraPedido = new GeraPedido(cliente, valorOrcamento, quantidadeItens, acoes);
 
         geraPedido.executar();
     }
