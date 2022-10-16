@@ -3,6 +3,7 @@ package application;
 import acao.AcaoAposGerarPedido;
 import acao.EnviarEmailPedido;
 import acao.SalvarPedidoNoBancoDeDados;
+import orcamento.ItemOrcamento;
 import pedido.GeraPedido;
 
 import java.math.BigDecimal;
@@ -23,7 +24,12 @@ public class TestePedidos {
             new SalvarPedidoNoBancoDeDados()
         );
 
-        GeraPedido geraPedido = new GeraPedido(cliente, valorOrcamento, quantidadeItens, acoes);
+        List<ItemOrcamento> itens = Arrays.asList(
+            new ItemOrcamento(new BigDecimal("100.00")),
+            new ItemOrcamento(new BigDecimal("320.00"))
+        );
+
+        GeraPedido geraPedido = new GeraPedido(cliente, itens, acoes);
 
         geraPedido.executar();
     }

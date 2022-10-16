@@ -5,36 +5,28 @@ import orcamento.estados.Finalizado;
 import orcamento.estados.SituacaoOrcamento;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Orcamento {
 
-  private BigDecimal valor;
-  private Integer quantidadeItens;
+  private BigDecimal valor = BigDecimal.ZERO;
+  private SituacaoOrcamento situacao = new EmAnalise(this);
+  private List<ItemOrcamento> itens = new ArrayList<>();
 
-  private SituacaoOrcamento situacao;
+  public Orcamento() {}
 
-  public Orcamento(BigDecimal valor, Integer quantidadeItens) {
-    this.valor = valor;
-    this.quantidadeItens = quantidadeItens;
-    this.situacao = new EmAnalise(this);
-  }
-
-  public Orcamento(BigDecimal valor, Integer quantidadeItens, SituacaoOrcamento situacao) {
-    this.valor = valor;
-    this.quantidadeItens = quantidadeItens;
+  public Orcamento(SituacaoOrcamento situacao) {
     this.situacao = situacao;
   }
 
   public BigDecimal getValor() {
-    return valor;
+    return valor.setScale(2, RoundingMode.HALF_UP);
   }
 
   public Integer getQuantidadeItens() {
-    return quantidadeItens;
-  }
-
-  public void setQuantidadeItens(Integer quantidadeItens) {
-    this.quantidadeItens = quantidadeItens;
+    return this.itens.size();
   }
 
   public void aplicarDescontoExtra() {
@@ -65,4 +57,10 @@ public class Orcamento {
   public boolean isFinalizado() {
     return this.situacao instanceof Finalizado;
   }
+
+  public void adicionarItem(ItemOrcamento item) {
+    this.valor = valor.add(item.getValor());
+    this.itens.add(item);
+  }
+
 }
