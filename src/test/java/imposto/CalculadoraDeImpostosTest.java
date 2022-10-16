@@ -26,7 +26,7 @@ class CalculadoraDeImpostosTest {
 
     @Test
     void taxShouldBeOfSixteenPercentIfTaxIsICMSWithISS() {
-        var tax = calculadora.calcular(this.orcamento, new ICMScomISS());
+        var tax = calculadora.calcular(this.orcamento, new ICMS(new ISS()));
         assertEquals(new BigDecimal("160.00"), tax);
     }
 
@@ -47,7 +47,7 @@ class CalculadoraDeImpostosTest {
     @Test
     void taxShouldBeZeroIfBudgetValueIsZeroAndTaxIsICMSWithISS() {
         var orcamento = new Orcamento(new BigDecimal("0.00"), 1);
-        var tax = calculadora.calcular(orcamento, new ICMScomISS());
+        var tax = calculadora.calcular(orcamento, new ICMS(new ISS()));
         assertEquals(new BigDecimal("0.00"), tax);
     }
 
