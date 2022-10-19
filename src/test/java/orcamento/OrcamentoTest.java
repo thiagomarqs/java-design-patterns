@@ -5,8 +5,12 @@ import orcamento.estados.EstadoInvalidoException;
 import orcamento.estados.Finalizado;
 import orcamento.estados.Reprovado;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestTemplate;
 
 import java.math.BigDecimal;
+import java.time.Duration;
+import java.time.Instant;
+import java.time.temporal.TemporalAmount;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -136,6 +140,25 @@ class OrcamentoTest {
         orcamento.adicionarItem(orcamentoAntigo);
 
         assertEquals(new BigDecimal("540.00"), orcamento.getValor());
+    }
+
+    @Test
+    void shouldTakeTwoSecondsOnFirstCallToGetValor() {
+        Orcamento orcamento = new Orcamento();
+        orcamento.adicionarItem(new ItemOrcamento(new BigDecimal("200.00")));
+        OrcamentoProxy proxy = new OrcamentoProxy(orcamento);
+
+        assertTimeout(Duration.between(Instant.ofEpochMilli(0), Instant.ofEpochMilli(2100)), () -> proxy.getValor());
+    }
+
+    @Test
+    void shouldNotTakeTwoSecondsOnSecondCallToGetValor() {
+        Orcamento orcamento = new Orcamento();
+        orcamento.adicionarItem(new ItemOrcamento(new BigDecimal("200.00")));
+        OrcamentoProxy proxy = new OrcamentoProxy(orcamento);
+
+        proxy.getValor();
+        assertTimeout(Duration.between(Instant.ofEpochMilli(0), Instant.ofEpochMilli(100)), () -> proxy.getValor());
     }
 
 }
