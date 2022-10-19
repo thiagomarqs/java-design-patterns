@@ -22,6 +22,14 @@ public class Orcamento implements Orcavel{
   }
 
   public BigDecimal getValor() {
+
+    // Simulando demora na obtenção do valor.
+    try {
+      Thread.sleep(2000);
+    }
+    catch (InterruptedException e) {
+      throw new RuntimeException(e);
+    }
     return valor.setScale(2, RoundingMode.HALF_UP);
   }
 
